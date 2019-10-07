@@ -144,10 +144,11 @@ export default {
         -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
         -webkit-user-select: none; /* Chrome, Safari, and Opera */
         -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+        -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); /* Removes higlight on click event on touch devices */
+        border-radius: 50%;
 
         &:active {
             background-color: #373737;
-            border-radius: 50%;
         }
     }
 
