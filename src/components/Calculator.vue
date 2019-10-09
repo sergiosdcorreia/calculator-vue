@@ -1,9 +1,9 @@
 <template>
     <div class="calc">
         <div class="display">{{result || 0}}</div>
-        <div class="btn" @click="clear">C</div>
+        <div class="btn">M</div>
         <div class="btn pi" @click="pi"><span>&#960;</span></div>
-        <div class="btn">&radic;</div>
+        <div class="btn" @click="squareRoot">&radic;</div>
         <div class="btn operator" @click="divide">&#8725;</div>
         <div class="btn" @click="append(7)">7</div>
         <div class="btn" @click="append(8)">8</div>
@@ -17,7 +17,7 @@
         <div class="btn" @click="append(2)">2</div>
         <div class="btn" @click="append(3)">3</div>
         <div class="btn operator" @click="sum">&#43;</div>
-        <div class="btn">M</div>
+        <div class="btn" @click="clear">C</div>
         <div class="btn" @click="append(0)">0</div>
         <div class="btn dot" @click="dot"><span>&#46;</span></div>
         <div class="btn equal" @click="equal">=</div>
@@ -43,12 +43,22 @@ export default {
                 this.result = '';
                 this.operatorClick = false;
             }
-            this.result = this.result + Math.PI;
+            this.result = this.result * Math.PI;
+        },
+        squareRoot(){
+            if(this.operatorClick) {
+                this.result = '';
+                this.operatorClick = false;
+            }
+            this.result = Math.sqrt(this.result);
         },
         append(number){
             if(this.operatorClick) {
                 this.result = '';
                 this.operatorClick = false;
+            }
+            if(this.result == 'E') {
+                this.result ='';
             }
             this.result = this.result + number;
         },
@@ -75,10 +85,13 @@ export default {
         },
         equal(){
             this.result = this.operator(
-                parseFloat(this.result),
-                parseFloat(this.prev)
+                this.result,
+                this.prev
             );
             this.prev = null;
+            if( this.result > 999999999) {
+                this.result = 'E';
+            }
         },
         setPrev(){
             this.prev = this.result;
@@ -175,7 +188,7 @@ export default {
         font-size: .6em;
 
         span {
-            padding-bottom: 3px;
+            padding-bottom: 3px; /* Adjustment for the element to be aligned correctly */
         }
     }
 
@@ -183,7 +196,7 @@ export default {
         font-size: .7em;
 
         span {
-            padding-bottom: 4px;
+            padding-bottom: 4px; /* Adjustment for the element to be aligned correctly */
         }
     }
 }
