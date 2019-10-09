@@ -88,6 +88,8 @@ export default {
                 this.result,
                 this.prev
             );
+
+            this.result = parseFloat(this.result).toFixed(2);
             this.prev = null;
             if( this.result > 999999999) {
                 this.result = 'E';
